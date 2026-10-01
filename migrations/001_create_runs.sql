@@ -1,0 +1,9 @@
+CREATE TABLE runs (
+    id BIGSERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    distance DOUBLE PRECISION NOT NULL,
+    duration_seconds INTEGER NOT NULL,
+    type VARCHAR(32) NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
