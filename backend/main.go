@@ -23,6 +23,10 @@ func main() {
 	})
 
 	router.GET("/api/runs", handler.GetRuns)
+	router.POST("/api/runs", handler.CreateRun)
+	router.GET("/api/runs/:id", handler.GetRun)
+	router.DELETE("/api/runs/:id", handler.DeleteRun)
+	router.PUT("/api/runs/:id", handler.UpdateRun)
 
 	router.Run(":8080")
 }
