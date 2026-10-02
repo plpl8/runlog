@@ -10,6 +10,24 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./migrations/001_create_runs.sql:/docker-entrypoint-initdb.d/001_create_runs.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U runlog -d runlog"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: runlog-backend
+    environment:
+      DATABASE_URL: postgres://runlog:runlog@postgres:5432/runlog
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres_data:
