@@ -12,12 +12,12 @@ const form = ref({
 })
 
 async function loadRuns() {
-  const response = await fetch('http://localhost:8080/api/runs')
+  const response = await fetch('/api/runs')
   runs.value = await response.json()
 }
 
 async function createRun() {
-  const response = await fetch('http://localhost:8080/api/runs', {
+  const response = await fetch('/api/runs', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ async function createRun() {
 }
 
 async function deleteRun(id) {
-  await fetch(`http://localhost:8080/api/runs/${id}`, {
+  await fetch(`/api/runs/${id}`, {
     method: 'DELETE'
   })
 
