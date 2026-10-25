@@ -20,6 +20,9 @@ func main() {
 
 	router := gin.New()
 
+	// Collect HTTP request metrics.
+	router.Use(PrometheusMiddleware())
+
 	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		level := "info"
 		if param.StatusCode >= 500 {
@@ -64,6 +67,8 @@ func main() {
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		AllowCredentials: false,
 	}))
+
+	router.GET("/metrics", MetricsHandler())
 
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "ok"})

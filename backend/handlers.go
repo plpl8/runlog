@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"strconv"
 )
 
@@ -50,6 +50,9 @@ func (h *RunHandler) CreateRun(c *gin.Context) {
 		})
 		return
 	}
+
+	runsCreatedTotal.Inc()
+	runsDistanceTotal.Add(run.Distance)
 
 	c.JSON(201, run)
 }
@@ -109,6 +112,8 @@ func (h *RunHandler) DeleteRun(c *gin.Context) {
 		return
 	}
 
+	runsDeletedTotal.Inc()
+
 	c.Status(204)
 }
 
@@ -148,6 +153,7 @@ func (h *RunHandler) UpdateRun(c *gin.Context) {
 		return
 	}
 
+	runsUpdatedTotal.Inc()
 	run.ID = id
 
 	c.JSON(200, run)
